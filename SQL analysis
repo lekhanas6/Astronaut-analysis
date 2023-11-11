@@ -1,4 +1,4 @@
-/* View the table Astronauts*/
+--View the table Astronauts
 select * from astronauts
 
 select status,count(*) as Number from astronauts
