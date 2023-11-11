@@ -1,20 +1,25 @@
---View the table Astronauts
+-- View the table Astronauts
 select * from astronauts
 
+-- The query groups astronauts by their status, revealing the dynamic tapestry of their careers - active, retired, or otherwise.
 select status,count(*) as Number from astronauts
 group by status
 
+-- The query groups astronauts by their military branches
 select military_branch , count(*) as number from astronauts
 group by military_branch
 
+-- Delve into the ranks that these celestial trailblazers once held in their respective armed forces
 select military_rank, count(*) as number from astronauts
 group by military_rank
 order by 2 desc
 limit 5
 
+-- The query list number of female and male astronauts
 select gender, count(*) as number from astronauts
 group by gender
 
+-- Gives the average life expectancy
 SELECT ROUND(AVG(
     CASE 
         WHEN status = 'Deceased' THEN YEAR(death_date) - YEAR(birth_date)
@@ -23,6 +28,7 @@ SELECT ROUND(AVG(
 )) AS Average_Life_Expectancy
 FROM astronauts;
 
+-- Gives the female average life expectancy
 SELECT ROUND(AVG(Female_life_Expectancy)) AS Female_Average_Life_Expectancy
 FROM (
     SELECT 
@@ -33,6 +39,7 @@ FROM (
     FROM astronauts
 ) AS FemaleLifeExpectancy;
 
+-- Gives the male average life expectancy
 SELECT ROUND(AVG(Male_life_Expectancy)) AS Male_Average_Life_Expectancy
 FROM (
     SELECT 
@@ -43,15 +50,18 @@ FROM (
     FROM astronauts
 ) AS MaleLifeExpectancy;
 
+-- Top ten graduate majors, offering a glimpse into the educational tapestry that makes up the astronaut corps.
 select graduate_major, count(*) as number from astronauts
 group by graduate_major
 order by 2 desc
 limit 10
 
+-- Glimpse into the academic odysseys that have propelled astronauts to the stars.
 select count(*) as Number_of_Astronauts, count(undergraduate_major) as Astronauts_with_Undergraduate_Degrees,
 count(graduate_major) as Astronauts_with_Graduate_Degrees
 from astronauts
 
+-- Top 5 birth states
 SELECT
     SUBSTRING_INDEX(Birth_Place, ',', -1) AS STATE,
     COUNT(*) AS Astronaut_Count
@@ -60,5 +70,6 @@ GROUP BY STATE
 ORDER BY Astronaut_Count DESC
 LIMIT 5;
 
+-- The average number of space flights and spacewalks provide insight into the vast range of missions and activities these astronauts have undertaken
 select round(avg(space_flights),2) as Average_Number_Of_Space_Flight , round(avg(space_walks),2) as Average_Number_Of_Space_Walks
 from astronauts
