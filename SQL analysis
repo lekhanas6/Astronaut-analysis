@@ -1,6 +1,7 @@
-select * from b90862c0.astronauts
+/* View the table Astronauts*/
+select * from astronauts
 
-select status,count(*) as Number from b90862c0.astronauts
+select status,count(*) as Number from astronauts
 group by status
 
 select military_branch , count(*) as number from astronauts
