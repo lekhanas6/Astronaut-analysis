@@ -1,0 +1,63 @@
+select * from b90862c0.astronauts
+
+select status,count(*) as Number from b90862c0.astronauts
+group by status
+
+select military_branch , count(*) as number from astronauts
+group by military_branch
+
+select military_rank, count(*) as number from astronauts
+group by military_rank
+order by 2 desc
+limit 5
+
+select gender, count(*) as number from astronauts
+group by gender
+
+SELECT ROUND(AVG(
+    CASE 
+        WHEN status = 'Deceased' THEN YEAR(death_date) - YEAR(birth_date)
+        ELSE 2023 - YEAR(birth_date)
+    END
+)) AS Average_Life_Expectancy
+FROM astronauts;
+
+SELECT ROUND(AVG(Female_life_Expectancy)) AS Female_Average_Life_Expectancy
+FROM (
+    SELECT 
+        CASE
+            WHEN Status = 'Deceased' AND Gender = 'Female' THEN YEAR(death_date) - YEAR(birth_date)
+            WHEN Status != 'Deceased' AND Gender = 'Female' THEN 2023 - YEAR(birth_date)
+        END AS Female_life_Expectancy
+    FROM astronauts
+) AS FemaleLifeExpectancy;
+
+SELECT ROUND(AVG(Male_life_Expectancy)) AS Male_Average_Life_Expectancy
+FROM (
+    SELECT 
+        CASE
+            WHEN Status = 'Deceased' AND Gender = 'Male' THEN YEAR(death_date) - YEAR(birth_date)
+            WHEN Status != 'Deceased' AND Gender = 'Male' THEN 2023 - YEAR(birth_date)
+        END AS Male_life_Expectancy
+    FROM astronauts
+) AS MaleLifeExpectancy;
+
+select graduate_major, count(*) as number from astronauts
+group by graduate_major
+order by 2 desc
+limit 10
+
+select count(*) as Number_of_Astronauts, count(undergraduate_major) as Astronauts_with_Undergraduate_Degrees,
+count(graduate_major) as Astronauts_with_Graduate_Degrees
+from astronauts
+
+SELECT
+    SUBSTRING_INDEX(Birth_Place, ',', -1) AS STATE,
+    COUNT(*) AS Astronaut_Count
+FROM astronauts
+GROUP BY STATE
+ORDER BY Astronaut_Count DESC
+LIMIT 5;
+
+select round(avg(space_flights),2) as Average_Number_Of_Space_Flight , round(avg(space_walks),2) as Average_Number_Of_Space_Walks
+from astronauts
